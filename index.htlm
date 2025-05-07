@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Feliz Cumpleaños!</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #0a0a0a;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+            flex-direction: column;
+        }
+        
+        .birthday-container {
+            position: relative;
+            text-align: center;
+            z-index: 10;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            color: #fff;
+            font-size: 4rem;
+            text-shadow: 0 0 10px #ff00ff, 
+                         0 0 20px #ff00ff, 
+                         0 0 30px #ff00ff;
+            animation: glow 1.5s ease-in-out infinite alternate;
+            margin-bottom: 30px;
+        }
+        
+        .heart {
+            width: 150px;
+            height: 130px;
+            position: relative;
+            margin: 0 auto 30px;
+            transform: scale(1.3);
+        }
+        
+        .heart:before, .heart:after {
+            content: "";
+            width: 75px;
+            height: 120px;
+            background-color: #888;
+            border-radius: 75px 75px 0 0;
+            position: absolute;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+        
+        .heart:before {
+            left: 75px;
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+        }
+        
+        .heart:after {
+            left: 0;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+        }
+        
+        .flame {
+            width: 15px;
+            height: 30px;
+            background: #ffff00;
+            border-radius: 50% 50% 20% 20%;
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 0 10px #ffff00, 
+                         0 0 20px #ff9900, 
+                         0 0 30px #ff3300;
+            animation: flicker 0.5s ease-in-out infinite alternate;
+            z-index: 3;
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #f00;
+            opacity: 0;
+            animation: confetti-fall 5s linear infinite;
+        }
+        
+        .light {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(10px);
+            opacity: 0;
+            animation: light-pulse 3s infinite;
+        }
+        
+        .message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(255, 0, 255, 0.7);
+            max-width: 80%;
+            text-align: center;
+            display: none;
+            z-index: 100;
+            animation: messagePop 0.5s ease-out;
+        }
+        
+        .message h2 {
+            color: #ff00aa;
+            margin-top: 0;
+        }
+        
+        .message p {
+            font-size: 1.2rem;
+            color: #333;
+        }
+        
+        .close-btn {
+            background-color: #ff00aa;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 15px;
+            transition: all 0.3s;
+        }
+        
+        .close-btn:hover {
+            background-color: #cc0088;
+            transform: scale(1.05);
+        }
+        
+        .surprise-btn {
+            background: linear-gradient(45deg, #ff00aa, #ff6600);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(255, 0, 170, 0.7);
+            transition: all 0.3s;
+            z-index: 20;
+            position: relative;
+            margin-top: 20px;
+        }
+        
+        .surprise-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 25px rgba(255, 0, 170, 0.9);
+        }
+        
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px #ff00ff, 
+                             0 0 20px #ff00ff, 
+                             0 0 30px #ff00ff;
+            }
+            to {
+                text-shadow: 0 0 15px #ff00ff, 
+                             0 0 25px #ff66ff, 
+                             0 0 35px #ffccff,
+                             0 0 45px #ffffff;
+            }
+        }
+        
+        @keyframes flicker {
+            0%, 100% {
+                transform: translateX(-50%) scale(1);
+            }
+            50% {
+                transform: translateX(-50%) scale(1.1, 0.9);
+            }
+        }
+        
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes light-pulse {
+            0%, 100% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            50% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+        }
+        
+        @keyframes messagePop {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.5);
+            }
+            80% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1.1);
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(1.3); }
+            25% { transform: scale(1.4); }
+            50% { transform: scale(1.3); }
+            75% { transform: scale(1.35); }
+            100% { transform: scale(1.3); }
+        }
+    </style>
+</head>
+<body>
+    <div class="birthday-container">
+        <h1>¡Feliz Cumpleaños!</h1>
+        <div class="heart-container">
+            <div class="heart"></div>
+            <div class="flame"></div>
+        </div>
+    </div>
+    
+    <button class="surprise-btn">¡Haz clic para una sorpresa!</button>
+    
+    <div class="message" id="birthdayMessage">
+        <h2>¡Feliz Cumpleaños!</h2>
+        <p>🎉 Que este día esté lleno de alegría, risas y momentos inolvidables. 🩶</p>
+        <p>Que todos tus sueños se hagan realidad y que este nuevo año de vida esté lleno de bendiciones.</p>
+        <p>¡La quierooo muchooo! 🥳</p>
+        <button class="close-btn">Cerrar</button>
+    </div>
+
+    <script>
+        // Crear confeti
+        function createConfetti() {
+            const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
+            
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                
+                // Posición aleatoria en la parte superior
+                confetti.style.left = Math.random() * 100 + 'vw';
+                
+                // Color aleatorio
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                
+                // Tamaño aleatorio
+                const size = Math.random() * 10 + 5;
+                confetti.style.width = size + 'px';
+                confetti.style.height = size + 'px';
+                
+                // Retraso en la animación
+                confetti.style.animationDelay = Math.random() * 5 + 's';
+                
+                // Forma aleatoria (círculo o cuadrado)
+                if (Math.random() > 0.5) {
+                    confetti.style.borderRadius = '50%';
+                }
+                
+                document.body.appendChild(confetti);
+            }
+        }
+        
+        // Crear luces de colores
+        function createLights() {
+            const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
+            
+            for (let i = 0; i < 10; i++) {
+                const light = document.createElement('div');
+                light.className = 'light';
+                
+                // Posición aleatoria
+                light.style.left = Math.random() * 100 + 'vw';
+                light.style.top = Math.random() * 100 + 'vh';
+                
+                // Color aleatorio
+                light.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                
+                // Tamaño aleatorio
+                const size = Math.random() * 300 + 100;
+                light.style.width = size + 'px';
+                light.style.height = size + 'px';
+                
+                // Retraso en la animación
+                light.style.animationDelay = Math.random() * 3 + 's';
+                
+                document.body.appendChild(light);
+            }
+        }
+        
+        // Mostrar mensaje
+        function showMessage() {
+            const message = document.getElementById('birthdayMessage');
+            message.style.display = 'block';
+            
+            // Añadir más confeti al mostrar el mensaje
+            for (let i = 0; i < 20; i++) {
+                createConfetti();
+            }
+            
+            // Animación de latido del corazón
+            const heart = document.querySelector('.heart');
+            heart.style.animation = 'heartbeat 0.8s ease infinite';
+        }
+        
+        // Cerrar mensaje
+        function closeMessage() {
+            document.getElementById('birthdayMessage').style.display = 'none';
+            const heart = document.querySelector('.heart');
+            heart.style.animation = 'none';
+        }
+        
+        // Inicializar animaciones
+        window.onload = function() {
+            createConfetti();
+            createLights();
+            
+            // Efecto de parpadeo para el texto
+            const title = document.querySelector('h1');
+            setInterval(() => {
+                title.style.animation = 'none';
+                setTimeout(() => {
+                    title.style.animation = 'glow 1.5s ease-in-out infinite alternate';
+                }, 50);
+            }, 5000);
+            
+            // Evento para el botón de sorpresa
+            document.querySelector('.surprise-btn').addEventListener('click', showMessage);
+            
+            // Evento para el botón de cerrar
+            document.querySelector('.close-btn').addEventListener('click', closeMessage);
+        };
+    </script>
+</body>
+</html>
